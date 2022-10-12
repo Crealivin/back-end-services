@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Product iI required'
+          msg: 'Product Id required'
         }
       }
     },
@@ -50,6 +50,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         isNumeric: {
           msg: 'Price must be numeric'
+        },
+        min: {
+          args: [0],
+          msg: "Minimum price is 0"
+        },
+        max: {
+          args:[50000000],
+          msg: "Maximum price is 50000000"
         }
       }
     },

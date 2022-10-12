@@ -32,6 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         isNumeric: {
           msg: 'Payment Amount must be numeric'
+        },
+        min: {
+          args: [0],
+          msg: "Minimum price is 0"
+        },
+        max: {
+          args:[50000000],
+          msg: "Maximum price is 50000000"
         }
       }
     },
