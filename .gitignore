@@ -1,2 +1,3 @@
-src/node_modules
-src/.envb
+node_modules
+.env
+package-lock.json

@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Endorse.hasOne(models.Product, {foreignKey: "productId"});
+      Endorse.belongsTo(models.Client, {foreignKey: "clientId"});
+      Endorse.belongsTo(models.Influencer, {foreignKey: "influencerId"});
     }
   }
   Endorse.init({

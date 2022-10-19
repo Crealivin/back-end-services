@@ -17,10 +17,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      messageId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
       status: {
         allowNull: false,
         type: Sequelize.STRING

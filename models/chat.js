@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Chat.belongsTo(models.Client, {foreignKey: "clientId"});
+      Chat.belongsTo(models.Influencer, {foreignKey: "influencerId"});
+      Chat.hasMany(models.Message, {foreignKey: "chatId"});
     }
   }
   Chat.init({
@@ -32,19 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    messageId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Message Id required'
-          }
-        }
-    },
     status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Chat',
+    
   });
   return Chat;
 };
