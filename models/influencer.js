@@ -2,6 +2,9 @@
 const {
   Model
 } = require('sequelize');
+const bcrypt = require("bcrypt");
+const logging = require('../helpers/logging');
+
 module.exports = (sequelize, DataTypes) => {
   class Influencer extends Model {
     /**
@@ -10,7 +13,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Influencer.hasMany(models.Content, {foreignKey: "influencerId"});
+      Influencer.hasMany(models.Favourite, {foreignKey: "influencerId"});
+      Influencer.hasMany(models.Message, {foreignKey: "influencerId"});
+      Influencer.hasMany(models.Chat, {foreignKey: "influencerId"});
+      Influencer.hasMany(models.Endorse, {foreignKey: "influencerId"});
     }
   }
   Influencer.init({
@@ -55,7 +62,6 @@ module.exports = (sequelize, DataTypes) => {
         isNumeric: {
           msg: 'Contact Number must be numeric'
         },
-        len: [10,13]
       }
     },
     socialMediaLink: {
@@ -89,7 +95,10 @@ module.exports = (sequelize, DataTypes) => {
         isNumeric: {
           msg: 'Id Card must be numeric'
         },
-        len: [15,17]
+        len: {
+          args: [15,17],
+          msg: 'idCard invalid!'
+        }
       }
     },
     email: {
@@ -157,6 +166,38 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Influencer',
+    hooks: {
+      beforeCreate: (influencer, _) => {
+        return bcrypt.hash(influencer.password, 10)
+            .then(hash => {
+              influencer.password = hash;
+            })
+            .catch(err => {
+              logging.log(err);
+            })
+      },
+      beforeUpdate(influencer, _) {
+        if (influencer.password) {
+          return bcrypt.hash(influencer.password, 10)
+              .then(hash => {
+                influencer.password = hash;
+              })
+              .catch(err => {
+                logging.log(err);
+              })
+        }
+      }
+    },
+    instanceMethods: {
+      validPassword: (password) => {
+        return bcrypt.compareSync(password, this.password);
+      }
+    }
   });
+
+  Influencer.prototype.validPassword = async (password, hash) => {
+    return await bcrypt.compareSync(password, hash);
+  }
+
   return Influencer;
 };

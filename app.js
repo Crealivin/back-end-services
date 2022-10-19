@@ -12,6 +12,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/api/v1', router);
+// NOTE: if you want to add a new controller, please add it in the 'controllers' directory, and list the router in 'controllers/index.js'
 
 const port = process.env.PORT || process.env.APP_PORT
 

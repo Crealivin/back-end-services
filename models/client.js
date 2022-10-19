@@ -10,7 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Client.hasMany(models.Favourite, {foreignKey: "clientId"});
+      Client.hasMany(models.Review, {foreignKey: "clientId"});
+      Client.hasMany(models.Chat, {foreignKey: "clientId"});
+      Client.hasMany(models.Message, {foreignKey: "clientId"});
+      Client.hasMany(models.Endorse, {foreignKey: "clientId"});
+      Client.hasMany(models.Product, {foreignKey: "clientId"});
     }
   }
   Client.init({
@@ -105,6 +110,38 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Client',
+    hooks: {
+      beforeCreate: (client, _) => {
+        return bcrypt.hash(client.password, 10)
+            .then(hash => {
+              client.password = hash;
+            })
+            .catch(err => {
+              logging.log(err);
+            })
+      },
+      beforeUpdate(client, _) {
+        if (client.password) {
+          return bcrypt.hash(client.password, 10)
+              .then(hash => {
+                client.password = hash;
+              })
+              .catch(err => {
+                logging.log(err);
+              })
+        }
+      }
+    },
+    instanceMethods: {
+      validPassword: (password) => {
+        return bcrypt.compareSync(password, this.password);
+      }
+    }
   });
+
+  Client.prototype.validPassword = async (password, hash) => {
+    return await bcrypt.compareSync(password, hash);
+  }
+
   return Client;
 };

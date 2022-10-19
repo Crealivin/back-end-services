@@ -9,6 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      influencerId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       title: {
         allowNull: false,
         type: Sequelize.STRING

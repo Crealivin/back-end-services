@@ -1,5 +1,5 @@
 {
-  "name": "hacktiv8-final3",
+  "name": "api crealivin",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/teramuza/hacktiv8-final3.git"
+    "url": "git+https://github.com/Crealivin/back-end-services.git"
   },
-  "author": "teramuza",
+  "author": "Crealivin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/teramuza/hacktiv8-final3/issues"
+    "url": "https://github.com/Crealivin/back-end-services/issues"
   },
-  "homepage": "https://github.com/teramuza/hacktiv8-final3#readme",
+  "homepage": "https://github.com/Crealivin/back-end-services#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dotenv": "^14.3.2",

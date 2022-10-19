@@ -17,6 +17,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
+      chatId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       message: {
         allowNull: false,
         type: Sequelize.STRING
